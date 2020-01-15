@@ -1,6 +1,15 @@
 #include <iostream>
+#include "Server.h"
+#include "SerialServer.h"
+#include "ClientHandler.h"
+#include "MyTestClientHandler.h"
+#include "Solver.h"
+#include "StringReverser.h"
+#include "MyClientHandler.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    Server *server = new SerialServer();
+    ClientHandler* clientTest = new MyClientHandler();
+    server->open(5600,clientTest);
     return 0;
 }

@@ -6,7 +6,7 @@
 #define EX4_SERIALSERVER_H
 #include "Server.h"
 class SerialServer: public Server {
-int open(int PORT, ClientHandler cHandler);
+int open(int PORT, ClientHandler* cHandler);
 void stop(){}
 };
 

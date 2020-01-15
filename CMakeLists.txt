@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
-project(ex4)
+project(EX4)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(ex4 main.cpp Searcher.cpp Searcher.h Problem.cpp Problem.h Solution.cpp Solution.h Searchable.cpp Searchable.h)
+add_executable(EX4 main.cpp MyTestClientHandler.h MyTestClientHandler.cpp SerialServer.h SerialServer.cpp Server.h Solver.h StringReverser.h StringReverser.cpp)
