@@ -40,8 +40,8 @@ int SerialServer::open(int PORT, ClientHandler *cHandler) {
 
         // accepting a client
         sockaddr_in addressClient;
-        int client_socket = accept(socketfd, (struct sockaddr *) &addressClient,
-                                   (socklen_t *) &addressClient);
+        int client_socket = accept(socketfd, (struct sockaddr *) &address,
+                                   (socklen_t *) &address);
 
         if (client_socket == -1) {
             std::cerr << "Error accepting client" << std::endl;

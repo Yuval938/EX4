@@ -9,11 +9,11 @@
 #include "Searchable.h"
 
 
-template<class T>
-class Searcher : public Searchable<T> {
+template<class T,class S>
+class Searcher {
 
 public:
-    virtual Solution Search(Searchable<T>) = 0;
+    virtual S Search(Searchable<T>*) = 0;
 
 };
 

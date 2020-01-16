@@ -6,32 +6,28 @@
 #define EX4_MYCLIENTHANDLER_H
 
 #include "ClientHandler.h"
+#include "Node.h"
+#include "Matrix.h"
 #include <vector>
 
 using namespace std;
 class MyClientHandler:public ClientHandler {
-    Solver<std::string, std::string> *solver;
+    Solver<vector<string>,string> *solver;
     //cache manage object
 public:
-    MyClientHandler() {
+
+    MyClientHandler(Solver<vector<string>,string>* solver1) {
+        this->solver = solver1;
     }
-
-    void handleClient(int clientsocket) override {
-        vector<std::string> matrix;
-        while(true) {
-            char buffer[1024] = {0};
-            int valread = read(clientsocket, buffer, 1024);
-            std::string line = std::string(buffer);
-            if(strcmp(line.c_str(),"end")==0){
-                break;
-            }
-            matrix.push_back(line);
-
-        }
-            for(auto item=matrix.begin() ;item!=matrix.end();item++)
-                cout<<*item<<endl;
-    }
-
+    /*
+     * now we will transform the data into a object called matrix - the object will contain a list of nodes Objects
+     * step 1 -  transform the data into a vector<vector<double>> - that will hold the matrix values and positions
+     * step 2 - now we will scan this structure and for each value we will make a node with the information
+     *          required and we will store it in a data structure (something like a vector probably)
+     * step 3 - we will make a matrix object that contains the initial pos and the end pos
+     *          and also a node data structure.
+     */
+    void handleClient(int clientsocket);
 };
 
 
