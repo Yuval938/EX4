@@ -13,7 +13,7 @@ template<class T,class S>
 class Searcher {
 
 public:
-    virtual S Search(Searchable<T>*) = 0;
+    virtual void Search(Searchable<T>*) = 0;
 
 };
 

@@ -11,24 +11,29 @@
 
 using namespace std;
 
-class Matrix:public Searchable<Node*> {
-    vector<vector<Node *>> Nodes;
-    Node *Target_Node = NULL;
-    Node *Starting_Node = NULL;
+class Matrix : public Searchable<Node<pair<int, int>> *> {
+    vector<vector<Node<pair<int, int>> *>> Nodes;
+    Node<pair<int, int>> *Target_Node;
+    Node<pair<int, int>> *Starting_Node;
 public:
-    Matrix(vector<vector<Node *>>& Nodes1, Node *start, Node *end) {
+    Matrix(vector<vector<Node<pair<int, int>> *>> Nodes1, Node<pair<int, int>> *start, Node<pair<int, int>> *end) {
         this->Nodes = Nodes1;
         this->Starting_Node = start;
         this->Target_Node = end;
     }
 
-    Node* getInitialState(){
+    Node<pair<int, int>> *getInitialState() {
         return this->Starting_Node;
     }
-    bool isGoalState(Node* goalState){
-        return false;
+
+    bool isGoalState(Node<pair<int, int>> *givenStateNode) {
+        pair<int, int> TN = this->Target_Node->getState();
+        pair<int, int> GS = givenStateNode->getState();
+
+        return (GS.first == TN.first && GS.second == TN.second);
     }
-    vector<vector<Node*>> getAllPossibleStates() override {
+
+    vector<vector<Node<pair<int, int>> *>> getAllPossibleStates() override {
         return this->Nodes;
     }
 

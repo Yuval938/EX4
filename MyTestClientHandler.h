@@ -16,11 +16,15 @@ public:
 
     void handleClient(int clientsocket) {
         char buffer[1024] = {0};
-        int valread = read( clientsocket , buffer, 1024);
+        int valread = read(clientsocket, buffer, 1024);
         std::string a = std::string(buffer);
-        std::string r = solver->solve(a);
-   //     out.write(r.c_str(),r.size());
-        int valsent = send(clientsocket , r.c_str() , r.size() , 0 );
+        if (a.compare("end") != 0) {
+            std::string r = solver->solve(a);
+            int valsent = send(clientsocket, r.c_str(), r.size(), 0);
+        } else {
+            std::cout << "reached the \"end\" word" << std::endl;
+        }
+        //     out.write(r.c_str(),r.size());
     }
 //cache manage object
 };

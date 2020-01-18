@@ -15,7 +15,7 @@
 
 int main() {
     Server *server = new SerialServer();
-    ClientHandler* clientTest = new MyClientHandler(new MatrixSolver(new BFS()));
-    server->open(5402,clientTest);
+    ClientHandler *clientTest = new MyClientHandler(new MatrixSolver(new BFS<pair<int, int>>()));
+    server->open(5401, clientTest);
     return 0;
 }

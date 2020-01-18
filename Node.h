@@ -7,45 +7,73 @@
 
 #include <string>
 #include <vector>
+
 using namespace std;
+
+template <typename T>
 class Node {
-    double value;
+    T state;
+    double value = 0;
     int numOfNeighbors = 0;
     char color = 'w';
     double pathValue = -1;
-    Node* father = NULL;
-    vector<Node*> Neighbors;
+    Node *father = NULL;
+    vector<Node *> Neighbors;
 public:
-    Node(double num) {
-        this->value = num;
+    Node(double givenValue) {
+        this->value = givenValue;
     }
-    double getValue(){
+
+    void setValue(double givenValue){
+        this->value = givenValue;
+    }
+
+    double getValue() {
         return this->value;
     }
-    void addNeighbor(Node* Neighbor){
+
+    void addNeighbor(Node *Neighbor) {
         this->Neighbors.push_back(Neighbor);
-        this->numOfNeighbors+=1;
+        this->numOfNeighbors += 1;
     }
-    void setPathValue(double val){
-        this->pathValue = val;
+
+    void setState(T givenState){
+        this->state = givenState;
     }
-    void setColor(char c){
+
+    T getState(){
+        return this->state;
+    }
+    void setColor(char c) {
         this->color = c;
     }
-    void setFather(Node* father1){
-        this->father = father1;
-    }
-    vector<Node*>::iterator getNeighbors(){
-        this->Neighbors.begin();
-    }
-    int GetNumOfNeighbors(){
-        return this->numOfNeighbors;
-    }
-    char getColor(){
+
+    char getColor() {
         return this->color;
     }
-    double getPathValue(){
+
+    void setFather(Node *father1) {
+        this->father = father1;
+    }
+
+    Node * getFather(){
+        return this->father;
+    }
+
+    typename vector<Node *>::iterator getNeighbors() {
+        this->Neighbors.begin();
+    }
+
+    int GetNumOfNeighbors() {
+        return this->numOfNeighbors;
+    }
+
+    double getPathValue() {
         return this->pathValue;
+    }
+
+    void setPathValue(double val) {
+        this->pathValue = val;
     }
 
 };

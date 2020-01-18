@@ -13,23 +13,24 @@
 
 using namespace std;
 
-class BFS : public Searcher<Node *, string> {
-    queue<Node *> Q;
+template <typename T>
+class BFS : public Searcher<Node<T> *, string> {
+    queue<Node<T> *> Q;
 
 public:
-    string Search(Searchable<Node *> *matrix) override {
-        int counter = 0;
-        Node *startingN = matrix->getInitialState();
-        vector<vector<Node *>> map = matrix->getAllPossibleStates();
+    void Search(Searchable<Node<T> *> *matrix) override {
+
+        Node<T> *startingN = matrix->getInitialState();
+        vector<vector<Node<T> *>> map = matrix->getAllPossibleStates();
         startingN->setPathValue(0);
         startingN->setColor('g');
         Q.push(startingN);
         while (!Q.empty()) {
-            Node *u = Q.front();
+            Node<T> *u = Q.front(); // Node *u = Q.pop()
             Q.pop();
             auto adj = u->getNeighbors();
-            int size = u->GetNumOfNeighbors();
-            for (int i = 0; i < size; i++) {
+            int numOfNeighbors = u->GetNumOfNeighbors();
+            for (int i = 0; i < numOfNeighbors; i++) {
                 if (adj[i]->getColor() == 'w') {
                     adj[i]->setColor('g');
                     adj[i]->setFather(u);
@@ -38,11 +39,11 @@ public:
                 }
             }
             u->setColor('b');
-            counter++;
+
         }
-        std::cout << "result is    " + to_string(matrix->getAllPossibleStates()[36][36]->getPathValue())<<std::endl;
-        std::cout<<to_string(counter)<<std::endl;
+
     }
+
 
 
 };
