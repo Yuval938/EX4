@@ -9,7 +9,7 @@
 #include "Searchable.h"
 
 
-template<class T,class S>
+template<class T>
 class Searcher {
 
 public:

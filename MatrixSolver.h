@@ -12,30 +12,32 @@
 #include "Matrix.h"
 #include "Searcher.h"
 #include <iomanip>
+#include "State.h"
 
 using namespace std;
 
+
 class MatrixSolver : public Solver<vector<string>, string> {
-    Searcher<Node<pair<int, int>> *, string> *searcher;
+    Searcher<pair<int, int>> *searcher;
 
 public:
 
 
-    MatrixSolver(Searcher<Node<pair<int, int>> *, string> *searcher1) {
+    MatrixSolver(Searcher<pair<int, int>> *searcher1) {
         this->searcher = searcher1;
     }
 
-    int printPath(Node<pair<int, int>> *node) {
+    int printPath(State<pair<int, int>> *state) {
 
-        if (node->getFather() == NULL) { // got to the first startP - let's print all
+        if (state->getCameFrom() == NULL) { // got to the first startP - let's print all
             return 0;
         }
 
-        Node<pair<int, int>> *father = node->getFather();
+        State<pair<int, int>> *father = state->getCameFrom();
         int stepsCount = 1 + printPath(father);
 
         pair<int, int> fatherState = father->getState();
-        pair<int, int> currentState = node->getState();
+        pair<int, int> currentState = state->getState();
         string relativity = "";
 
         if (currentState.second - fatherState.second == 1) { // currentX - fatherX == 1
@@ -48,7 +50,7 @@ public:
             relativity = "Up";
         }
 
-        std::cout << stepsCount << ". " << relativity << " (" << node->getPathValue() << "), "
+        std::cout << stepsCount << ". " << relativity << " (" << state->getCost() << "), "
                   << std::flush;
         if (stepsCount % 15 == 0) { // make \n every 15 steps
             std::cout << std::endl;
@@ -59,39 +61,49 @@ public:
     }
 
     string solve(vector<string> problem) override {
-        vector<vector<Node<pair<int, int>> *>> matrixDouble;
+        vector<vector<double>> doubleMatrix;
         int matrixSize = problem.size();
         int i, j;
         for (i = 0; i < matrixSize - 2; i++) {
             string numString = "";
             int lineSize = problem[i].size();
             j = 0;
-            vector<Node<pair<int, int>> *> lineVector;
+            vector<double> lineVector;
             while (j < lineSize) {
                 while (j < lineSize && problem[i].at(j) != ',') {
                     numString += problem[i].at(j);
                     j++;
                 }
                 double value = atof(numString.c_str());
-                Node<pair<int, int>> *newNode = new Node<pair<int, int>>(value);
-                newNode->setValue(value);
-                lineVector.push_back(newNode);
+                // State<pair<int, int>> *state = new State<pair<int, int>>(value);
+                // state->setCost(value);
+                lineVector.push_back(value);
                 j++;
                 numString = "";
             }
 
             if (lineVector.size() > 0) {
-                matrixDouble.push_back(lineVector);
+                doubleMatrix.push_back(lineVector);
             }
         }
 
-        for (i = 0; i < matrixDouble.size(); i++) {
-            for (j = 0; j < matrixDouble[i].size(); j++) {
+        // got all values in doubles array
+        // now we need it in states matrix
+
+        int doubleMatrixSize = doubleMatrix.size();
+        vector<vector<State<pair<int, int>> *>> matrix;
+        for (i = 0; i < doubleMatrixSize; i++) {
+            vector<State<pair<int, int>> *> matrixLine;
+            for (j = 0; j < doubleMatrix[i].size(); j++) {
                 pair<int, int> state;
                 state.first = i;
                 state.second = j;
-                matrixDouble[i][j]->setState(state);
+                int value = doubleMatrix[i][j];
+                State<pair<int,int>> *newState = new State<pair<int,int>>(state);
+                newState->setValue(value);
+                matrixLine.push_back(newState);
             }
+            matrix.push_back(matrixLine);
         }
 
         string numString = "";
@@ -126,41 +138,11 @@ public:
         }
 
 
-        int pos = i;
-        int lines = matrixDouble.size();
+        State<pair<int, int>> *startP = matrix[startY][startX];
+        State<pair<int, int>> *endP = matrix[endY][endX];
 
 
-        int numOfRows = matrixDouble.size();
-        //adding negibours;
-        for (int i = 0; i < numOfRows; i++) {
-            int sizeOfCol = matrixDouble[i].size();
-            for (int j = 0; j < sizeOfCol; j++) {
-                if (j + 1 < sizeOfCol) {
-                    //adds i,[j+1]  RIGHT
-                    matrixDouble[i][j]->addNeighbor(matrixDouble[i][j + 1]);
-                }
-                if (j - 1 >= 0) {
-                    //adds i,[j-1]  LEFT
-                    matrixDouble[i][j]->addNeighbor(matrixDouble[i][j - 1]);
-                }
-                if (i - 1 >= 0) {
-                    //adds i-1,[j]  UP
-                    matrixDouble[i][j]->addNeighbor(matrixDouble[i - 1][j]);
-                }
-                if (i + 1 < numOfRows) {
-                    //adds i+1,[j]  DOWN
-                    matrixDouble[i][j]->addNeighbor(matrixDouble[i + 1][j]);
-                }
-
-
-            }
-
-        }
-
-        Node<pair<int, int>> *startP = matrixDouble[startY][startX];
-        Node<pair<int, int>> *endP = matrixDouble[endY][endX];
-
-        Searchable<Node<pair<int, int>> *> *matrixToSolve = new Matrix(matrixDouble, startP, endP);
+        Searchable<pair<int, int>> *matrixToSolve = new Matrix(matrix, startP, endP);
 
         this->searcher->Search(matrixToSolve);
 
@@ -169,6 +151,8 @@ public:
 
         return "";
     }
+
+
 };
 
 
