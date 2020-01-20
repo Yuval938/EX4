@@ -13,6 +13,7 @@ class State {
     T state; // usually position
     double cost; // cost of path
     double value = 0;
+    double FValue = 0;
     State<T> *cameFrom = NULL; // father
     char color = 'w';
 
@@ -31,6 +32,13 @@ public:
 
     void setCost(double newCost) {
         this->cost = newCost;
+    }
+    double getFValue() {
+        return this->FValue;
+    }
+
+    void setFValue(double FValue1) {
+        this->FValue = FValue1;
     }
 
     double getValue() {
@@ -61,6 +69,23 @@ public:
         return this->color;
     }
 
+};
+
+//we might need to change these classes from pointer to a &
+template<class T>
+class compreByCost{
+public:
+    bool operator()(const State<T>* s1,const State<T>* s2 )const{
+        return s1->getCost() > s2->getCost();
+    }
+};
+
+template<class T>
+class compreByFValue{
+public:
+    bool operator()(const State<T>* s1,const State<T>* s2 )const{
+        return s1->getPriority() > s2->getPriority();
+    }
 };
 
 

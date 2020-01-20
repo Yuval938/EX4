@@ -20,7 +20,11 @@ public:
 
     virtual bool isGoalState(State<T>) = 0;
 
+    virtual State<T>* getGoalState() = 0;
+
     virtual vector<State<T> *> getAllPossibleStates(State<T>) = 0; // like get neighbors
+
+    virtual int huristicsFunc(State<T> currentState, State<T> goalState) = 0;
 
 };
 

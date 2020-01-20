@@ -58,6 +58,14 @@ public:
         return neighbors;
     }
 
+    int huristicsFunc(State<pair<int, int>> currentState, State<pair<int, int>> goalState) override {
+        return abs(currentState.getState().first - goalState.getState().first) +
+               abs(currentState.getState().second - goalState.getState().second);
+    }
+    State<pair<int,int>>* getGoalState() {
+        return this->goalState;
+    }
+
 };
 
 
