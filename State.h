@@ -63,6 +63,7 @@ public:
 };
 
 //we might need to change these classes from pointer to a &
+/*
 template<class T>
 class compreByCost{
 public:
@@ -70,14 +71,13 @@ public:
         return s1->getCost() > s2->getCost();
     }
 };
-
+ */
 template<class T>
 class compreByFValue{
 public:
-    bool operator()(const State<T>* s1,const State<T>* s2 )const{
-        return s1->getPriority() > s2->getPriority();
+    bool operator()( State<T>* s1, State<T>* s2 ){
+        return s1->getFValue() > s2->getFValue();
     }
 };
-
 
 #endif //EX4_STATE_H
