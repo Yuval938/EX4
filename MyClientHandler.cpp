@@ -26,19 +26,8 @@ void MyClientHandler::handleClient(int clientsocket) {
         }
         matrixString.push_back(line);
     }
-this->solver->solve(matrixString);
-/*
-    cout << "lines: " << lines << endl;
-    for (i = 0; i < lines; i++) {
-        int columns = matrixDouble[i].size();
-        for (j = 0; j < columns; j++) {
-            cout << matrixDouble[i][j]->getValue() << " " << flush;
-        }
-        //   cout << "columns: " << columns << flush;
-        cout << endl;
-    }
-
-    */
+    string result = this->solver->solve(matrixString);
+    int valsent = send(clientsocket, result.c_str(), result.size(), 0);
 }
 
 
