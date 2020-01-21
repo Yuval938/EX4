@@ -22,9 +22,12 @@ class AStar : public Searcher<T> {
 public:
     void Search(Searchable<T> *matrix) override {
         State<T>* currentState=matrix->getInitialState();
-        currentState->setCost(currentState->getValue());
+        currentState->setCost(0);
         vector<State<T>*> succsseors;
         int new_cost;
+        if(matrix->isGoalState(*currentState)){
+            return;    //goal and start are the same
+        }
 // push the start state to open
         Open.push(currentState);
         while(!Open.empty()){
@@ -38,11 +41,11 @@ public:
 // if this state is the goal state, finish
                 if ((matrix->isGoalState(*s))){
                     s->setCameFrom(currentState);
-                    s->setCost(currentState->getCost() + s->getValue());
+                    s->setCost(currentState->getCost() + currentState->getValue());
                     return;
                 }else{
 // calculate the cost that could be
-                    new_cost = currentState->getCost() + s->getValue();
+                    new_cost = currentState->getCost() + currentState->getValue();
 // if its a new node or the new cost is better then the previews cost
                     if ((!this->isInQueue(&Open, s) && !this->isInQueue(&Close, s)) || new_cost < s->getCost()){
                         s->setCost(new_cost);
