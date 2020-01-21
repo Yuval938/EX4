@@ -42,17 +42,17 @@ public:
         int i = s.getState().first;
         int j = s.getState().second;
         int size = this->matrix.size(); // it's nXn array so colsSize and rowSize are the same
-        if (j + 1 < size) {
+        if (j + 1 < size && this->matrix[i][j + 1]->getValue() >= 0) {
             // State<pair<int, int>> *s = this->matrix[i][j];
             neighbors.push_back(this->matrix[i][j + 1]); // Right
         }
-        if (j - 1 >= 0) {
+        if (j - 1 >= 0 && this->matrix[i][j - 1]->getValue() >= 0) {
             neighbors.push_back(this->matrix[i][j - 1]); // Left
         }
-        if (i - 1 >= 0) {
+        if (i - 1 >= 0 && this->matrix[i - 1][j]->getValue() >= 0) {
             neighbors.push_back(this->matrix[i - 1][j]); // Up
         }
-        if (i + 1 < size) {
+        if (i + 1 < size && this->matrix[i + 1][j]->getValue() >= 0) {
             neighbors.push_back(this->matrix[i + 1][j]); // Down
         }
         return neighbors;
@@ -62,7 +62,8 @@ public:
         return abs(currentState.getState().first - goalState.getState().first) +
                abs(currentState.getState().second - goalState.getState().second);
     }
-    State<pair<int,int>>* getGoalState() {
+
+    State<pair<int, int>> *getGoalState() {
         return this->goalState;
     }
 

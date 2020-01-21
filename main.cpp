@@ -12,6 +12,7 @@
 #include "BFS.h"
 #include "Node.h"
 #include "Matrix.h"
+#include "BestFirstSearch.h"
 
 int main() {
     Server *server = new SerialServer();

@@ -99,11 +99,19 @@ public:
                 state.first = i;
                 state.second = j;
                 int value = doubleMatrix[i][j];
-                State<pair<int,int>> *newState = new State<pair<int,int>>(state);
+                State<pair<int, int>> *newState = new State<pair<int, int>>(state);
                 newState->setValue(value);
                 matrixLine.push_back(newState);
             }
             matrix.push_back(matrixLine);
+        }
+
+        for (i = 0; i < doubleMatrixSize; i++) {
+            for (j = 0; j < doubleMatrix[i].size(); j++) {
+                cout << setw(2);
+                cout << matrix[i][j]->getValue()<< " " << flush;
+            }
+            cout << endl;
         }
 
         string numString = "";
@@ -143,6 +151,7 @@ public:
 
 
         Searchable<pair<int, int>> *matrixToSolve = new Matrix(matrix, startP, endP);
+
 
         this->searcher->Search(matrixToSolve);
 

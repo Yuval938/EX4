@@ -15,7 +15,6 @@ class State {
     double value = 0;
     double FValue = 0;
     State<T> *cameFrom = NULL; // father
-    char color = 'w';
 
 public:
     State(T givenState) {
@@ -59,14 +58,6 @@ public:
 
     void setCameFrom(State<T> *father) {
         this->cameFrom = father;
-    }
-
-    void setColor(char c) {
-        this->color = c;
-    }
-
-    char getColor() {
-        return this->color;
     }
 
 };
