@@ -16,18 +16,9 @@ using namespace std;
 
 template<typename T>
 class BestFirstSearch : public Searcher<T> {
-
     vector<State<T> *> openList;
-    unordered_set<State<T> *> closed; // to keep track on states we visited already
 
 public:
-    bool foundInOpenList(State<T> *state) {
-        return (find(openList.begin(), openList.end(), state) != openList.end());
-    }
-
-    bool foundInClosed(State<T> *state) {
-        return (closed.count(state));
-    }
 
     void sortVector() {
         sort(openList.begin(), openList.end(),
@@ -35,16 +26,28 @@ public:
         );
     }
 
+    bool foundInOpenList(State<T> *state) {
+        return (find(openList.begin(), openList.end(), state) != openList.end());
+    }
+
+    State<T> * popMin(){ // erase first element (in our case the min) and return it
+        State<T> *min = this->openList[0];
+        this->openList.erase(this->openList.begin(), this->openList.begin() + 1);
+        return min;
+    }
+
+    void addToOpenlist(State<T> *initialState){
+        this->openList.push_back(initialState);
+    }
+
     void Search(Searchable<T> *matrix) override {
-        State<T> *initialState = matrix->getInitialState();
-        initialState->setCost(0);
-        openList.push_back(initialState);
-        while (!openList.empty()) {
+
+        this->addToOpenlist(matrix->getInitialState());
+        while (!this->openList.empty()) {
             // cout << "openList size: " << openList.size() << endl; // just for check
             this->sortVector();
-            State<T> *u = openList[0];
-            openList.erase(openList.begin(), openList.begin() + 1); // erase first element (in our case the min)
-            closed.insert(u);
+            State<T> *u = this->popMin();
+            this->closed.insert(u);
             if (matrix->isGoalState(*u)) {
                 return;
             }
@@ -54,8 +57,9 @@ public:
                 // didn't find neither in closed or open, so we add to open
                 if (!this->foundInClosed(adj[i]) && !this->foundInOpenList(adj[i])) {
                     adj[i]->setCameFrom(u);
-                    adj[i]->setCost(u->getCost() + u->getValue());
-                    openList.push_back(adj[i]);
+                    //adj[i]->setCost(u->getCost() + u->getValue());
+                    this->setCost(adj[i], u);
+                    this->openList.push_back(adj[i]);
                 }
             }
         }

@@ -19,6 +19,7 @@ class State {
 public:
     State(T givenState) {
         this->state = givenState;
+        cost = 0;
     }
 
     bool Equals(State<T> s) {

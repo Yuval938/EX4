@@ -52,9 +52,12 @@ public:
 
         std::cout << stepsCount << ". " << relativity << " (" << state->getCost() << "), "
                   << std::flush;
+        /*
+         *
         if (stepsCount % 15 == 0) { // make \n every 15 steps
             std::cout << std::endl;
         }
+         */
 
         return stepsCount;
 
@@ -106,10 +109,11 @@ public:
             matrix.push_back(matrixLine);
         }
 
+        // to print the matrix
         for (i = 0; i < doubleMatrixSize; i++) {
             for (j = 0; j < doubleMatrix[i].size(); j++) {
                 cout << setw(2);
-                cout << matrix[i][j]->getValue()<< " " << flush;
+                cout << matrix[i][j]->getValue() << " " << flush;
             }
             cout << endl;
         }
