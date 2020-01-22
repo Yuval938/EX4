@@ -13,8 +13,6 @@
 #include "Searcher.h"
 #include <iomanip>
 #include "State.h"
-#include <mutex>
-
 using namespace std;
 
 
@@ -29,9 +27,6 @@ public:
     }
 
     int printPath(State<pair<int, int>> *state) {
-        std::mutex m;
-        // this->check++;
-        m.lock();
         if (state->getCameFrom() == NULL) { // got to the first startP - let's print all
             return 0;
         }
@@ -54,10 +49,11 @@ public:
             relativity = "Up";
         }
 
+        //std::cout << relativity << " (" << state->getCost() << ") ," << std::flush;
+        this->returnString += relativity + " (" + std::to_string((int) state->getCost()) + ") ,";
 
         //std::cout << relativity << " (" << state->getCost() << ") ," << std::flush;
         this->returnString += relativity + " (" + std::to_string((int) state->getCost()) + ") ,";
-        m.unlock();
         return stepsCount;
 
     }
