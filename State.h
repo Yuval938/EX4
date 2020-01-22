@@ -14,11 +14,13 @@ class State {
     double cost; // cost of path
     double value = 0;
     double FValue = 0;
+    double hValue = 0;
     State<T> *cameFrom = NULL; // father
 
 public:
     State(T givenState) {
         this->state = givenState;
+        cost = 0;
     }
 
     bool Equals(State<T> s) {
@@ -32,12 +34,21 @@ public:
     void setCost(double newCost) {
         this->cost = newCost;
     }
+
     double getFValue() {
         return this->FValue;
     }
 
     void setFValue(double FValue1) {
         this->FValue = FValue1;
+    }
+
+    double getHValue() {
+        return this->hValue;
+    }
+
+    void setHValue(double newHvalue) {
+        this->hValue = newHvalue;
     }
 
     double getValue() {
@@ -62,8 +73,8 @@ public:
 
 };
 
-//we might need to change these classes from pointer to a &
 /*
+ * //we might need to change these classes from pointer to a &
 template<class T>
 class compreByCost{
 public:
@@ -71,7 +82,6 @@ public:
         return s1->getCost() > s2->getCost();
     }
 };
- */
 template<class T>
 class compreByFValue{
 public:
@@ -79,5 +89,6 @@ public:
         return s1->getFValue() > s2->getFValue();
     }
 };
+ */
 
 #endif //EX4_STATE_H

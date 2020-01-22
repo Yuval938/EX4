@@ -13,10 +13,13 @@
 #include "Node.h"
 #include "Matrix.h"
 #include "BestFirstSearch.h"
+#include "AStar.h"
+#include "ParallelServer.h"
 
 int main() {
+   // Server *server = new ParallelServer();
     Server *server = new SerialServer();
-    ClientHandler *clientTest = new MyClientHandler(new MatrixSolver(new BFS<pair<int, int>>()));
-    server->open(5401, clientTest);
+    ClientHandler *clientTest = new MyClientHandler(new MatrixSolver(new BestFirstSearch<pair<int, int>>()));
+    server->open(5404, clientTest);
     return 0;
 }

@@ -13,13 +13,14 @@
 #include "Searcher.h"
 #include <iomanip>
 #include "State.h"
+#include <mutex>
 
 using namespace std;
 
 
 class MatrixSolver : public Solver<vector<string>, string> {
     Searcher<pair<int, int>> *searcher;
-
+    string returnString = "";
 public:
 
 
@@ -28,12 +29,15 @@ public:
     }
 
     int printPath(State<pair<int, int>> *state) {
-
+        std::mutex m;
+        // this->check++;
+        m.lock();
         if (state->getCameFrom() == NULL) { // got to the first startP - let's print all
             return 0;
         }
 
         State<pair<int, int>> *father = state->getCameFrom();
+        //std::cout << "check:" << this->check << std::endl;
         int stepsCount = 1 + printPath(father);
 
         pair<int, int> fatherState = father->getState();
@@ -50,12 +54,10 @@ public:
             relativity = "Up";
         }
 
-        std::cout << stepsCount << ". " << relativity << " (" << state->getCost() << "), "
-                  << std::flush;
-        if (stepsCount % 15 == 0) { // make \n every 15 steps
-            std::cout << std::endl;
-        }
 
+        //std::cout << relativity << " (" << state->getCost() << ") ," << std::flush;
+        this->returnString += relativity + " (" + std::to_string((int) state->getCost()) + ") ,";
+        m.unlock();
         return stepsCount;
 
     }
@@ -106,13 +108,16 @@ public:
             matrix.push_back(matrixLine);
         }
 
-        for (i = 0; i < doubleMatrixSize; i++) {
+        // to print the matrix
+/*
+ *         for (i = 0; i < doubleMatrixSize; i++) {
             for (j = 0; j < doubleMatrix[i].size(); j++) {
                 cout << setw(2);
-                cout << matrix[i][j]->getValue()<< " " << flush;
+                cout << matrix[i][j]->getValue() << " " << flush;
             }
             cout << endl;
         }
+ */
 
         string numString = "";
         int count = 0;
@@ -155,10 +160,10 @@ public:
 
         this->searcher->Search(matrixToSolve);
 
-        printPath(endP); // print all path
-        std::cout << std::endl; // go down line
-
-        return "";
+        int stepsCount = printPath(endP); // print all path
+        // std::cout << this->returnString << endl;
+        // std::cout << "\nnumber of steps: " << stepsCount << std::endl; // go down line
+        return this->returnString;
     }
 
 

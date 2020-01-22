@@ -9,24 +9,20 @@
 #include <queue>
 #include <iostream>
 #include "Searcher.h"
-#include <unordered_set>
+
 
 using namespace std;
 
 template<typename T>
 class BFS : public Searcher<T> {
     queue<State<T> *> Q;
-    unordered_set<State<T> *> closed; // to keep track on states we visited already
-
 public:
-    bool foundInClosed(State<T> *state) {
-        return (closed.count(state));
-    }
+
     void Search(Searchable<T> *matrix) override {
 
         State<T> *initialState = matrix->getInitialState();
         initialState->setCost(0);
-        closed.insert(initialState);
+        this->closed.insert(initialState);
         Q.push(initialState);
         while (!Q.empty()) {
             State<T> *u = Q.front(); // Node *u = Q.pop()
@@ -35,7 +31,7 @@ public:
             int numOfNeighbors = adj.size();
             for (int i = 0; i < numOfNeighbors; i++) {
                 if (!this->foundInClosed(adj[i])) {
-                    closed.insert(adj[i]);
+                    this->closed.insert(adj[i]);
                     adj[i]->setCameFrom(u);
                     adj[i]->setCost(u->getCost() + u->getValue());
                     Q.push(adj[i]);

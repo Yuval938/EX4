@@ -16,18 +16,32 @@ void replaceAll(std::string &str, const std::string &from, const std::string &to
 }
 
 void MyClientHandler::handleClient(int clientsocket) {
+    bool flag = true;
     vector<std::string> matrixString;
-    while (true) {
+    string line = "";
+    while (flag) {
         char buffer[1024] = {0};
-        int valread = read(clientsocket, buffer, 1024);
-        std::string line = std::string(buffer);
-        if (strcmp(line.c_str(), "end") == 0) {
-            break;
+        read(clientsocket, buffer, 1024);
+        string check = string(buffer);
+        for (int i = 0; i < 1024; i++) {
+            if (buffer[i] == '\n') {
+                matrixString.push_back(line);
+                line = "";
+            } else {
+                if (buffer[i] == 0) {
+                    line = "";
+                    break;
+                }
+                if(buffer[i] == 'e'){
+                    flag = false;
+                    break;
+                }
+                line += buffer[i];
+            }
         }
-        matrixString.push_back(line);
     }
     string result = this->solver->solve(matrixString);
-    int valsent = send(clientsocket, result.c_str(), result.size(), 0);
+    send(clientsocket, result.c_str(), result.size(), 0);
 }
 
 
