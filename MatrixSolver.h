@@ -19,7 +19,7 @@ using namespace std;
 
 class MatrixSolver : public Solver<vector<string>, string> {
     Searcher<pair<int, int>> *searcher;
-
+    // int check = 0;
 public:
 
 
@@ -28,12 +28,13 @@ public:
     }
 
     int printPath(State<pair<int, int>> *state) {
-
+        // this->check++;
         if (state->getCameFrom() == NULL) { // got to the first startP - let's print all
             return 0;
         }
 
         State<pair<int, int>> *father = state->getCameFrom();
+        //std::cout << "check:" << this->check << std::endl;
         int stepsCount = 1 + printPath(father);
 
         pair<int, int> fatherState = father->getState();
@@ -50,7 +51,8 @@ public:
             relativity = "Up";
         }
 
-        std::cout << stepsCount << ". " << relativity << " (" << state->getCost() << "), "
+        //std::cout << stepsCount << ". " <<
+        std::cout << relativity << " (" << state->getCost() << ") ,"
                   << std::flush;
         /*
          *
@@ -159,9 +161,8 @@ public:
 
         this->searcher->Search(matrixToSolve);
 
-        printPath(endP); // print all path
-        std::cout << std::endl; // go down line
-
+        int stepsCount = printPath(endP); // print all path
+        std::cout << "\nnumber of steps: " << stepsCount << std::endl; // go down line
         return "";
     }
 

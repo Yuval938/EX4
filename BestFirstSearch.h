@@ -44,7 +44,6 @@ public:
 
         this->addToOpenlist(matrix->getInitialState());
         while (!this->openList.empty()) {
-            // cout << "openList size: " << openList.size() << endl; // just for check
             this->sortVector();
             State<T> *u = this->popMin();
             this->closed.insert(u);
@@ -57,7 +56,6 @@ public:
                 // didn't find neither in closed or open, so we add to open
                 if (!this->foundInClosed(adj[i]) && !this->foundInOpenList(adj[i])) {
                     adj[i]->setCameFrom(u);
-                    //adj[i]->setCost(u->getCost() + u->getValue());
                     this->setCost(adj[i], u);
                     this->openList.push_back(adj[i]);
                 }

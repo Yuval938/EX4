@@ -15,63 +15,106 @@ using namespace std;
 
 template<typename T>
 class AStar : public Searcher<T> {
+
     queue<State<T> *> Q;
-    priority_queue<State<T>*, vector<State<T>*>, compreByFValue<T>> Open;
-    priority_queue<State<T>*, vector<State<T>*>, compreByFValue<T>> Close;
+    vector<State<T> *> openList;
+    //  priority_queue<State<T> *, vector<State<T> *>, compreByFValue<T>> Open;
+    //   priority_queue<State<T> *, vector<State<T> *>, compreByFValue<T>> Close;
 
 public:
-    void Search(Searchable<T> *matrix) override {
-        State<T>* currentState=matrix->getInitialState();
-        currentState->setCost(0);
-        vector<State<T>*> succsseors;
-        int new_cost;
-        if(matrix->isGoalState(*currentState)){
-            return;    //goal and start are the same
-        }
-// push the start state to open
-        Open.push(currentState);
-        while(!Open.empty()){
-// pop from the queue the state with the best priority
-            currentState = Open.top();
-            Open.pop();
-            Close.push(currentState);
-// put in successesors all the possible states to go to from the current state
-            succsseors = matrix->getAllPossibleStates(*currentState);
-            for(State<T>* s: succsseors) {
-// if this state is the goal state, finish
-                if ((matrix->isGoalState(*s))){
-                    s->setCameFrom(currentState);
-                    s->setCost(currentState->getCost() + currentState->getValue());
-                    return;
-                }else{
-// calculate the cost that could be
-                    new_cost = currentState->getCost() + currentState->getValue();
-// if its a new node or the new cost is better then the previews cost
-                    if ((!this->isInQueue(&Open, s) && !this->isInQueue(&Close, s)) || new_cost < s->getCost()){
-                        s->setCost(new_cost);
-                        s->setFValue(matrix->huristicsFunc(s, matrix->getGoalState()) + new_cost);
-                        if(this->isInQueue(&Open, s))
-                        {
-                            this->setPriority(&Open, s);
-                        }else{
-                            Open.push(s);
-                        }
-                        s->setCameFrom(currentState);
-                    }
-                }
-            }
-        }
-        return;
+
+    void sortVector() {
+        sort(openList.begin(), openList.end(),
+             [](State<T> *u, State<T> *v) {
+                 return
+                         (u->getHValue() + u->getCost()) < (v->getHValue() + v->getCost());
+             }
+        );
     }
 
-    bool isInQueue(priority_queue<State<T>*, vector<State<T>*>, compreByFValue<T>> *pq, State<T>* state) {
+    bool foundInOpenList(State<T> *state) {
+        return (find(openList.begin(), openList.end(), state) != openList.end());
+    }
+
+    void addToOpenlist(State<T> *initialState) {
+        this->openList.push_back(initialState);
+    }
+
+    double heuristic(State<T> *state, Searchable<T> *matrix) {
+        return matrix->huristicsFunc(state, matrix->getGoalState());
+    }
+
+    State<T> *popMin() { // erase first element (in our case the min) and return it
+        this->sortVector();
+        State<T> *min = this->openList[0];
+        this->openList.erase(this->openList.begin(), this->openList.begin() + 1);
+        return min;
+    }
+
+    double fFunction(State<T> *state, Searchable<T> *matrix) {
+        return (this->heuristic(state, matrix) + state->getCost());
+    }
+
+    void Search(Searchable<T> *matrix) override {
+        State<T> *initial = matrix->getInitialState();
+        this->addToOpenlist(initial);
+        while (!this->openList.empty()) {
+/*
+ *             cout << "size of openList: " << this->openList.size() <<
+                 " size of closeList: " << this->closed.size() <<
+                 endl;
+ */
+            State<T> *u = this->popMin();
+            if (matrix->isGoalState(*u)) {
+                break;
+            }
+            vector<State<T> *> adj = matrix->getAllPossibleStates(*u);
+            int numOfNeighbors = adj.size();
+            for (int i = 0; i < numOfNeighbors; i++) {
+                State<T> *child = adj[i];
+                // double successor_current_cost = u->getCost() + u->getValue() + child->getValue();
+                double fatherAddition = u->getCost();
+                if (fatherAddition == 0) { // means it's the initial state
+                    fatherAddition = u->getValue();
+                }
+                double successor_current_cost = fatherAddition + child->getValue();
+                if (this->foundInOpenList(child)) {
+                    if (child->getValue() <= successor_current_cost) {
+                        continue;
+                    }
+                } else if (this->foundInClosed(child)) {
+                    if (child->getValue() <= successor_current_cost) {
+                        continue;
+                    }
+                    this->addToOpenlist(child);
+                    this->closed.erase(this->closed.find(child));
+                } else {
+                    this->addToOpenlist(child);
+                    child->setHValue(this->heuristic(child, matrix));
+                }
+                child->setCost(successor_current_cost);
+                child->setCameFrom(u);
+            }
+            this->closed.insert(u);
+        }
+    }
+
+
+// f function - h + g
+// h- manhathen
+// g- cost
+
+
+/*
+ *
+ *        bool isInQueue(priority_queue<State<T> *, vector<State<T> *>, compreByFValue<T>> *pq, State<T> *state) {
         bool isInQueue = false;
-        priority_queue<State<T>*, vector<State<T>*>, compreByFValue<T>> tempQueue;
-        State<T>* tempState;
-        while(!pq->empty()){
+        priority_queue<State<T> *, vector<State<T> *>, compreByFValue<T>> tempQueue;
+        State<T> *tempState;
+        while (!pq->empty()) {
             tempState = pq->top();
             pq->pop();
-            if (tempState->Equals(*state)){
+            if (tempState->Equals(*state)) {
                 isInQueue = true;
             }
             tempQueue.push(tempState);
@@ -80,13 +123,13 @@ public:
         return isInQueue;
 
     }
-    void setPriority(priority_queue<State<T>*, vector<State<T>*>, compreByFValue<T>> *pq,State<T>* state) {
-        priority_queue<State<T>*, vector<State<T>*>, compreByFValue<T>> tempQueue;
-        State<T>* tempState;
-        while(!pq->empty()){
+ *    void setPriority(priority_queue<State<T> *, vector<State<T> *>, compreByFValue<T>> *pq, State<T> *state) {
+        priority_queue<State<T> *, vector<State<T> *>, compreByFValue<T>> tempQueue;
+        State<T> *tempState;
+        while (!pq->empty()) {
             tempState = pq->top();
             pq->pop();
-            if (tempState->Equals(*state)){
+            if (tempState->Equals(*state)) {
                 tempState->setCost(state->getCost());
                 tempState->setFValue(state->getFValue());
             }
@@ -94,6 +137,7 @@ public:
         }
         pq->swap(tempQueue);
     }
+ */
 
 };
 
