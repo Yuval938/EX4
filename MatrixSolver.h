@@ -53,7 +53,7 @@ public:
 
 
         //std::cout << relativity << " (" << state->getCost() << ") ," << std::flush;
-        this->returnString += relativity + " (" + std::to_string((int)state->getCost()) + ") ,";
+        this->returnString += relativity + " (" + std::to_string((int) state->getCost()) + ") ,";
 
         return stepsCount;
 
@@ -106,13 +106,15 @@ public:
         }
 
         // to print the matrix
-        for (i = 0; i < doubleMatrixSize; i++) {
+/*
+ *         for (i = 0; i < doubleMatrixSize; i++) {
             for (j = 0; j < doubleMatrix[i].size(); j++) {
                 cout << setw(2);
                 cout << matrix[i][j]->getValue() << " " << flush;
             }
             cout << endl;
         }
+ */
 
         string numString = "";
         int count = 0;
@@ -156,8 +158,8 @@ public:
         this->searcher->Search(matrixToSolve);
 
         int stepsCount = printPath(endP); // print all path
-        std::cout << this->returnString << endl;
-        std::cout << "\nnumber of steps: " << stepsCount << std::endl; // go down line
+        // std::cout << this->returnString << endl;
+        // std::cout << "\nnumber of steps: " << stepsCount << std::endl; // go down line
         return this->returnString;
     }
 
