@@ -51,11 +51,7 @@ public:
 
         //std::cout << relativity << " (" << state->getCost() << ") ," << std::flush;
         this->returnString += relativity + " (" + std::to_string((int) state->getCost()) + ") ,";
-
-        //std::cout << relativity << " (" << state->getCost() << ") ," << std::flush;
-        this->returnString += relativity + " (" + std::to_string((int) state->getCost()) + ") ,";
         return stepsCount;
-
     }
 
     string solve(vector<string> problem) override {
@@ -159,7 +155,7 @@ public:
         int stepsCount = printPath(endP); // print all path
         // std::cout << this->returnString << endl;
         // std::cout << "\nnumber of steps: " << stepsCount << std::endl; // go down line
-        return this->returnString;
+        return "print path: " + this->returnString;
     }
 
 
