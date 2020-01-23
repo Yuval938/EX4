@@ -16,7 +16,6 @@ using namespace std;
 
 template<typename T>
 class BestFirstSearch : public Searcher<T> {
-    vector<State<T> *> openList;
 
 public:
     BestFirstSearch() {
@@ -29,26 +28,12 @@ public:
         return new BestFirstSearch (*this);
     }
     void sortVector() {
-        sort(openList.begin(), openList.end(),
+        sort(this->openList.begin(), this->openList.end(),
              [](State<T> *u, State<T> *v) { return u->getCost() < v->getCost(); }
         );
     }
 
-    bool foundInOpenList(State<T> *state) {
-        return (find(openList.begin(), openList.end(), state) != openList.end());
-    }
-
-    State<T> * popMin(){ // erase first element (in our case the min) and return it
-        State<T> *min = this->openList[0];
-        this->openList.erase(this->openList.begin(), this->openList.begin() + 1);
-        return min;
-    }
-
-    void addToOpenlist(State<T> *initialState){
-        this->openList.push_back(initialState);
-    }
-
-    void Search(Searchable<T> *matrix) override {
+    int Search(Searchable<T> *matrix) override {
 
         this->addToOpenlist(matrix->getInitialState());
         while (!this->openList.empty()) {
@@ -56,7 +41,7 @@ public:
             State<T> *u = this->popMin();
             this->closed.insert(u);
             if (matrix->isGoalState(*u)) {
-                return;
+                return this->closed.size();;
             }
             vector<State<T> *> adj = matrix->getAllPossibleStates(*u);
             int numOfNeighbors = adj.size();

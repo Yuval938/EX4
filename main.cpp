@@ -19,7 +19,7 @@
 int main() {
     Server *server = new ParallelServer();
    // Server *server = new SerialServer();
-    ClientHandler *clientTest = new MyClientHandler(new MatrixSolver(new BFS<pair<int, int>>()));
-    server->open(5404, clientTest);
+    ClientHandler *clientTest = new MyClientHandler(new MatrixSolver(new AStar<pair<int, int>>()));
+    server->open(5402, clientTest);
     return 0;
 }

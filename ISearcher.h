@@ -10,7 +10,7 @@ template<class T>
 class ISearcher {
 
 public:
-    virtual void Search(Searchable<T>*) = 0;
+    virtual int Search(Searchable<T>*) = 0;
 
 };
 

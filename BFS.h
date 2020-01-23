@@ -27,7 +27,7 @@ public:
     {
         return new BFS (*this);
     }
-    void Search(Searchable<T> *matrix) override {
+    int Search(Searchable<T> *matrix) override {
 
         State<T> *initialState = matrix->getInitialState();
         initialState->setCost(0);
@@ -47,6 +47,7 @@ public:
                 }
             }
         }
+        return this->closed.size();
     }
 
 };

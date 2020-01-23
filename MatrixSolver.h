@@ -160,12 +160,18 @@ public:
         Searchable<pair<int, int>> *matrixToSolve = new Matrix(matrix, startP, endP);
 
 
-        this->searcher->Search(matrixToSolve);
+        int numOfNodesVisited = this->searcher->Search(matrixToSolve);
+        cout << setw(20);
+        std::cout << "numOfNodesVisited: " << numOfNodesVisited << std::flush;
+        cout << setw(15);
+        std::cout << " total cost: " << endP->getCost() << std::flush;
 
         int stepsCount = printPath(endP); // print all path
+        // st = myString.substr(0, myString.size()-1);
+        this->returnString = this->returnString.substr(0, this->returnString.size() -2); // to remove ", "
         // std::cout << this->returnString << endl;
-        // std::cout << "\nnumber of steps: " << stepsCount << std::endl; // go down line
-        return "print path: " + this->returnString;
+        // std::cout << "\nnumber of steps: " << stepsCount << std::endl;
+        return this->returnString + "\n";
     }
 
 
