@@ -53,6 +53,3 @@ int ParallelServer::open(int PORT, ClientHandler *cHandler) {
     }
 }
 */
-void ParallelServer::stop() {
-    this->isRunning = false;
-}

@@ -15,11 +15,12 @@
 #include "BestFirstSearch.h"
 #include "AStar.h"
 #include "ParallelServer.h"
+#include "DFS.h"
 
 int main() {
     Server *server = new ParallelServer();
    // Server *server = new SerialServer();
-    ClientHandler *clientTest = new MyClientHandler(new MatrixSolver(new AStar<pair<int, int>>()));
-    server->open(5402, clientTest);
+    ClientHandler *clientTest = new MyClientHandler(new MatrixSolver(new DFS<pair<int, int>>()));
+    server->open(5404, clientTest);
     return 0;
 }
