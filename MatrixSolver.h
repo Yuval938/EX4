@@ -36,7 +36,7 @@ public:
 
 
     int printPath(State<pair<int, int>> *state) {
-        this->returnString = "";
+        //this->returnString = "";
         if (state->getCameFrom() == NULL) { // got to the first startP - let's print all
             return 0;
         }

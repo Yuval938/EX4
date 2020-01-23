@@ -4,6 +4,7 @@
 
 #include "SerialServer.h"
 #include <iostream>
+#include <thread>
 
 int SerialServer::open(int PORT, ClientHandler *cHandler) {
 
@@ -47,7 +48,10 @@ int SerialServer::open(int PORT, ClientHandler *cHandler) {
             std::cerr << "Error accepting client" << std::endl;
             return -4;
         }
-        cHandler->handleClient(client_socket);
+        ClientHandler* clone = cHandler->clone();
+        std::thread t3(&ClientHandler::handleClient, clone, client_socket);
+        t3.join();
+      //  cHandler->handleClient(client_socket);
         close(client_socket); //closing the listening socket
 
 
