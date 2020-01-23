@@ -11,7 +11,8 @@
 #include "MyClientHandler.h"
 using namespace std;
 class ParallelServer : public Server {
-    bool isRunning = true;
+    bool stayOpen = true;
+    bool firstClient = false;
 public:
     int open(int PORT, ClientHandler *cHandler) {
         //create socket
@@ -38,22 +39,32 @@ public:
         }
 
         //making socket listen to the port
-        if (listen(socketfd, 5) == -1) { //can also set to SOMAXCON (max connections)
+        if (listen(socketfd, 100) == -1) { //can also set to SOMAXCON (max connections)
             std::cerr << "Error during listening command" << std::endl;
             return -3;
         } else {
             std::cout << "Server is now listening ..." << std::endl;
         }
-        while (true) {
+
+        while (stayOpen) {
             // accepting a client
             sockaddr_in addressClient;
             int client_socket = accept(socketfd, (struct sockaddr *) &address,
                                        (socklen_t *) &address);
+            if(firstClient){
+                struct timeval tv;
+                tv.tv_usec = 0;
+                tv.tv_sec = 120;
+                setsockopt(socketfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&tv, sizeof(tv));
+            }
+
             if (client_socket == -1) {
-                std::cerr << "Error accepting client" << std::endl;
-                return -4;
+                std::cerr << "timeout occurred (TWO MINUTES WITHOUT A CONNECTION)" << std::endl;
+                stop();
+               // return -4;
             }
           //  ClientHandler* clientHandler = new MyClientHandler(cHandler);
+          this->firstClient=true;
           ClientHandler* clone = cHandler->clone();
             std::thread t2(&ClientHandler::handleClient, clone, client_socket);
             t2.detach();
@@ -65,7 +76,9 @@ public:
 
 
     }
-    void stop();
+    void stop(){
+        this->stayOpen = false;
+    }
 };
 
 
