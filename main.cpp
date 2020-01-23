@@ -10,7 +10,6 @@
 #include "Searcher.h"
 #include "Searchable.h"
 #include "BFS.h"
-#include "Node.h"
 #include "Matrix.h"
 #include "BestFirstSearch.h"
 #include "AStar.h"
@@ -19,8 +18,7 @@
 
 int main() {
     Server *server = new ParallelServer();
-   // Server *server = new SerialServer();
-    ClientHandler *clientTest = new MyClientHandler(new MatrixSolver(new DFS<pair<int, int>>()));
-    server->open(5404, clientTest);
+    ClientHandler *clientTest = new MyClientHandler(new MatrixSolver(new BestFirstSearch<pair<int, int>>()));
+    server->open(5402, clientTest);
     return 0;
 }

@@ -6,7 +6,6 @@
 #define EX4_MYCLIENTHANDLER_H
 
 #include "ClientHandler.h"
-#include "Node.h"
 #include "Matrix.h"
 #include <vector>
 

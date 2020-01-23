@@ -13,6 +13,7 @@
 #include "Searcher.h"
 #include <iomanip>
 #include "State.h"
+
 using namespace std;
 
 
@@ -25,31 +26,30 @@ public:
     MatrixSolver(Searcher<pair<int, int>> *searcher1) {
         this->searcher = searcher1;
     }
-    MatrixSolver (MatrixSolver const &a){
+
+    MatrixSolver(MatrixSolver const &a) {
         this->searcher = a.searcher->clone();
     }
-    MatrixSolver * clone () const        // Virtual constructor (copying)
-    {
-        return new MatrixSolver (*this);
-    }
 
+    MatrixSolver *clone() const        // Virtual constructor (copying)
+    {
+        return new MatrixSolver(*this);
+    }
 
 
     int printPath(State<pair<int, int>> *state) {
-        //this->returnString = "";
         if (state->getCameFrom() == NULL) { // got to the first startP - let's print all
             return 0;
         }
 
         State<pair<int, int>> *father = state->getCameFrom();
-        //std::cout << "check:" << this->check << std::endl;
         int stepsCount = 1 + printPath(father);
 
         pair<int, int> fatherState = father->getState();
         pair<int, int> currentState = state->getState();
         string relativity = "";
 
-        if (currentState.second - fatherState.second == 1) { // currentX - fatherX == 1
+        if (currentState.second - fatherState.second == 1) {
             relativity = "Right";
         } else if (currentState.second - fatherState.second == -1) {
             relativity = "Left";
@@ -60,6 +60,7 @@ public:
         }
 
         //std::cout << relativity << " (" << state->getCost() << ") ," << std::flush;
+        //this->returnString += to_string(stepsCount) + ". ";
         this->returnString += relativity + " (" + std::to_string((int) state->getCost()) + ") ,";
         return stepsCount;
     }
@@ -111,15 +112,16 @@ public:
         }
 
         // to print the matrix
-/*
- *         for (i = 0; i < doubleMatrixSize; i++) {
+        /*
+         *
+         * for (i = 0; i < doubleMatrixSize; i++) {
             for (j = 0; j < doubleMatrix[i].size(); j++) {
                 cout << setw(2);
                 cout << matrix[i][j]->getValue() << " " << flush;
             }
             cout << endl;
         }
- */
+         */
 
         string numString = "";
         int count = 0;
@@ -164,13 +166,12 @@ public:
         cout << setw(20);
         std::cout << "numOfNodesVisited: " << numOfNodesVisited << std::flush;
         cout << setw(15);
-        std::cout << " total cost: " << endP->getCost() << std::flush;
+        std::cout << " total cost: " << endP->getCost() << std::endl;
 
         int stepsCount = printPath(endP); // print all path
         // st = myString.substr(0, myString.size()-1);
-        this->returnString = this->returnString.substr(0, this->returnString.size() -2); // to remove ", "
+        this->returnString = this->returnString.substr(0, this->returnString.size() - 2); // to remove ", "
         // std::cout << this->returnString << endl;
-        // std::cout << "\nnumber of steps: " << stepsCount << std::endl;
         return this->returnString + "\n";
     }
 
