@@ -18,6 +18,7 @@ class ClientHandler
 {
 public:
     virtual void handleClient(int clientSocket) = 0;   //handleClient(InputStream,OutputStream)
+    virtual ClientHandler * clone ()  = 0;
 };
 
 

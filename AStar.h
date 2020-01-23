@@ -22,7 +22,16 @@ class AStar : public Searcher<T> {
     //   priority_queue<State<T> *, vector<State<T> *>, compreByFValue<T>> Close;
 
 public:
+AStar(){
 
+}
+    AStar (AStar const &){
+
+    }
+    AStar * clone () const        // Virtual constructor (copying)
+    {
+        return new AStar (*this);
+    }
     void sortVector() {
         sort(openList.begin(), openList.end(),
              [](State<T> *u, State<T> *v) {

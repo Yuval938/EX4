@@ -25,8 +25,18 @@ public:
     MatrixSolver(Searcher<pair<int, int>> *searcher1) {
         this->searcher = searcher1;
     }
+    MatrixSolver (MatrixSolver const &a){
+        this->searcher = a.searcher->clone();
+    }
+    MatrixSolver * clone () const        // Virtual constructor (copying)
+    {
+        return new MatrixSolver (*this);
+    }
+
+
 
     int printPath(State<pair<int, int>> *state) {
+        this->returnString = "";
         if (state->getCameFrom() == NULL) { // got to the first startP - let's print all
             return 0;
         }

@@ -11,14 +11,23 @@
 #include <vector>
 
 using namespace std;
-class MyClientHandler:public ClientHandler {
-    Solver<vector<string>,string> *solver;
+
+class MyClientHandler : public ClientHandler {
+    Solver<vector<string>, string> *solver;
     //cache manage object
 public:
 
-    MyClientHandler(Solver<vector<string>,string>* solver1) {
+    MyClientHandler(Solver<vector<string>, string> *solver1) {
         this->solver = solver1;
     }
+    MyClientHandler (MyClientHandler const & a){
+        this->solver = a.solver->clone();
+    }
+
+    MyClientHandler* clone()  override {
+        return new MyClientHandler(*this);
+    }
+
     /*
      * now we will transform the data into a object called matrix - the object will contain a list of nodes Objects
      * step 1 -  transform the data into a vector<vector<double>> - that will hold the matrix values and positions

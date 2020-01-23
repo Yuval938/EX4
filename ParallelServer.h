@@ -8,6 +8,7 @@
 #include <vector>
 #include <thread>
 #include "Server.h"
+#include "MyClientHandler.h"
 using namespace std;
 class ParallelServer : public Server {
     bool isRunning = true;
@@ -52,7 +53,9 @@ public:
                 std::cerr << "Error accepting client" << std::endl;
                 return -4;
             }
-            std::thread t2(&ClientHandler::handleClient, cHandler, client_socket);
+          //  ClientHandler* clientHandler = new MyClientHandler(cHandler);
+          ClientHandler* clone = cHandler->clone();
+            std::thread t2(&ClientHandler::handleClient, clone, client_socket);
             t2.detach();
             // cHandler->handleClient(client_socket);
             // close(client_socket); //closing the listening socket

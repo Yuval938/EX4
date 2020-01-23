@@ -17,7 +17,16 @@ template<typename T>
 class BFS : public Searcher<T> {
     queue<State<T> *> Q;
 public:
+    BFS(){
 
+    }
+    BFS (BFS const &){
+
+    }
+    BFS * clone () const        // Virtual constructor (copying)
+    {
+        return new BFS (*this);
+    }
     void Search(Searchable<T> *matrix) override {
 
         State<T> *initialState = matrix->getInitialState();

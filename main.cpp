@@ -17,9 +17,9 @@
 #include "ParallelServer.h"
 
 int main() {
-   // Server *server = new ParallelServer();
-    Server *server = new SerialServer();
-    ClientHandler *clientTest = new MyClientHandler(new MatrixSolver(new BestFirstSearch<pair<int, int>>()));
+    Server *server = new ParallelServer();
+   // Server *server = new SerialServer();
+    ClientHandler *clientTest = new MyClientHandler(new MatrixSolver(new BFS<pair<int, int>>()));
     server->open(5404, clientTest);
     return 0;
 }

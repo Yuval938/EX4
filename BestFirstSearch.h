@@ -19,7 +19,15 @@ class BestFirstSearch : public Searcher<T> {
     vector<State<T> *> openList;
 
 public:
+    BestFirstSearch() {
+    }
+    BestFirstSearch (BestFirstSearch const &){
 
+    }
+    BestFirstSearch * clone () const        // Virtual constructor (copying)
+    {
+        return new BestFirstSearch (*this);
+    }
     void sortVector() {
         sort(openList.begin(), openList.end(),
              [](State<T> *u, State<T> *v) { return u->getCost() < v->getCost(); }
@@ -62,6 +70,7 @@ public:
             }
         }
     }
+
 
 };
 

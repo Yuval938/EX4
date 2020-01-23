@@ -28,6 +28,8 @@ public:
     bool foundInClosed(State<T> *state) {
         return (closed.count(state));
     }
+    virtual Searcher * clone () const = 0;
+
 
 };
 

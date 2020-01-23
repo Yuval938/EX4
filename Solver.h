@@ -9,5 +9,6 @@ class Solver
 {
 public:
     virtual S solve(P problem) = 0;
+    virtual Solver * clone () const = 0;
 };
 #endif //EX4_SOLVER_H
