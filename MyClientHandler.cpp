@@ -17,15 +17,17 @@ void replaceAll(std::string &str, const std::string &from, const std::string &to
 
 void MyClientHandler::handleClient(int clientsocket) {
     bool flag = true;
-    vector<std::string> matrixString;
+    vector<std::string> matrixStringVector;
     string line = "";
+    string matrixAsString = "";
     while (flag) {
         char buffer[1024] = {0};
         read(clientsocket, buffer, 1024);
         string check = string(buffer);
         for (int i = 0; i < 1024; i++) {
             if (buffer[i] == '\n') {
-                matrixString.push_back(line);
+                matrixStringVector.push_back(line);
+                matrixAsString+=line;
                 line = "";
             } else {
                 if (buffer[i] == 0) {
@@ -40,7 +42,16 @@ void MyClientHandler::handleClient(int clientsocket) {
             }
         }
     }
-    string result = this->solver->solve(matrixString);
+    string key = to_string(this->HashFunc(matrixAsString));
+    string result = cm->get(key);
+    string noSolution = "";
+    if(result==noSolution) {
+        cout<<"using solver"<<endl;
+         result = this->solver->solve(matrixStringVector);
+        cm->insert(key,result);
+    }else{
+        cout<<"not using solver"<<endl;
+    }
     send(clientsocket, result.c_str(), result.size(), 0);
 }
 

@@ -10,6 +10,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <netinet/in.h>
+#include <exception>
 //abstract class SERVER
 //open(int port,ClientHandler)
 //stop()

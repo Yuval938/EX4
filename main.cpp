@@ -15,10 +15,15 @@
 #include "AStar.h"
 #include "ParallelServer.h"
 #include "DFS.h"
+#include "MyCacheManager.h"
+#include "Cachemanager.h"
 
 int main() {
     Server *server = new ParallelServer();
-    ClientHandler *clientTest = new MyClientHandler(new MatrixSolver(new BestFirstSearch<pair<int, int>>()));
-    server->open(5402, clientTest);
+    Cachemanager<string, string> *cache = new MyCacheManager();
+   // cache->insert(123,"dassda");
+    // Server *server = new SerialServer();
+    ClientHandler *clientTest = new MyClientHandler(new MatrixSolver(new DFS<pair<int, int>>()),cache);
+    server->open(5404, clientTest);
     return 0;
 }

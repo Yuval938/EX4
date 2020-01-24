@@ -7,20 +7,24 @@
 
 #include "ClientHandler.h"
 #include "Matrix.h"
+#include "Cachemanager.h"
 #include <vector>
 
 using namespace std;
 
 class MyClientHandler : public ClientHandler {
     Solver<vector<string>, string> *solver;
-    //cache manage object
+    Cachemanager<string,string>* cm;
+    hash<string> HashFunc;
 public:
 
-    MyClientHandler(Solver<vector<string>, string> *solver1) {
+    MyClientHandler(Solver<vector<string>, string>* solver1,Cachemanager<string,string>* cache) {
         this->solver = solver1;
+        this->cm = cache;
     }
     MyClientHandler (MyClientHandler const & a){
         this->solver = a.solver->clone();
+        this->cm = a.cm;
     }
 
     MyClientHandler* clone()  override {

@@ -59,8 +59,15 @@ public:
             }
 
             if (client_socket == -1) {
-                std::cerr << "timeout occurred (TWO MINUTES WITHOUT A CONNECTION)" << std::endl;
-                stop();
+                if(errno==EWOULDBLOCK || errno == EAGAIN){
+                    std::cerr<< "timeout occurred (TWO MINUTES WITHOUT A CONNECTION)"<<std::endl;
+                    stop();
+                }
+                else {
+                    std::cerr << "error accepting client" << std::endl;
+                    stop();
+                }
+
                // return -4;
             }
           //  ClientHandler* clientHandler = new MyClientHandler(cHandler);
