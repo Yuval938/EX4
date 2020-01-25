@@ -1,0 +1,202 @@
+commit d13db9f895daa34431843d971cc57cd882e93061
+Author: Yuval938 <incyuval@gmail.com>
+Date:   Sat Jan 25 13:54:54 2020 +0200
+
+    without args works
+
+commit 0bb6a7ead31ab9b6e44cf96cec0feb981210741c
+Author: Yuval938 <incyuval@gmail.com>
+Date:   Sat Jan 25 13:47:58 2020 +0200
+
+    via argument
+
+commit f0b32da92ca76421c80a60b1a7f111dc514c5f54
+Author: valdman40 <valdman40@gmail.com>
+Date:   Fri Jan 24 18:06:13 2020 +0200
+
+    read port from args
+
+commit da8335574416ed0a6788593fb93dca8868a802f7
+Author: Yuval938 <incyuval@gmail.com>
+Date:   Fri Jan 24 15:17:37 2020 +0200
+
+    added namespace boot
+
+commit c47d434007e5d879cf8b41cd708d4f5d4f06cab9
+Author: valdman40 <valdman40@gmail.com>
+Date:   Fri Jan 24 11:34:22 2020 +0200
+
+    grapsh pdf
+
+commit 4a5ae65047089590b552b1b7eb9843feceb2f8c4
+Author: valdman40 <valdman40@gmail.com>
+Date:   Fri Jan 24 11:28:10 2020 +0200
+
+    graph
+
+commit a9ecb0b78181e5e08b1caaf4c5e8d5fbf31f0d97
+Author: Yuval938 <incyuval@gmail.com>
+Date:   Fri Jan 24 02:33:43 2020 +0200
+
+    CacheManager works - not sure if a map is needed(but its there)
+
+commit 798d552a33ed8d5582a990f0f8255beb8a921cf3
+Author: valdman40 <valdman40@gmail.com>
+Date:   Thu Jan 23 20:49:11 2020 +0200
+
+    fixed DFS
+
+commit 16fea46ba6386a0e4bd1803d281a25d6b308a9a5
+Author: Yuval938 <incyuval@gmail.com>
+Date:   Thu Jan 23 13:54:48 2020 +0200
+
+    added DFS
+
+commit e2a1c29fac699b60c61e9a3d0c9597d9758072f8
+Author: Yuval938 <59195998+Yuval938@users.noreply.github.com>
+Date:   Thu Jan 23 13:40:11 2020 +0200
+
+    added timeout feature & stop()
+
+commit 08d9ccb7f08759abd09e6a08cd3108aa27de8728
+Author: valdman40 <valdman40@gmail.com>
+Date:   Thu Jan 23 13:39:39 2020 +0200
+
+    Print path like the example
+    
+    also print to console - number of nodes visited, total cost
+
+commit f942b89b23c4553fd9eb2674bf424c960a69eed0
+Author: Yuval938 <59195998+Yuval938@users.noreply.github.com>
+Date:   Thu Jan 23 12:53:05 2020 +0200
+
+    SerialServer opens a new thread with a clone
+
+commit 2788a52b57795c2562b68d642d3c33dd44fa4d4e
+Author: Yuval938 <59195998+Yuval938@users.noreply.github.com>
+Date:   Thu Jan 23 12:41:45 2020 +0200
+
+    added deep clones for parallel use
+
+commit d5d9a8bb0500ee18e7c1d34b42568d1f831ddb94
+Author: valdman40 <valdman40@gmail.com>
+Date:   Thu Jan 23 09:16:27 2020 +0200
+
+    fixed print
+
+commit b62617bb5f2cd5a1e636d471e71a597cc8940446
+Merge: 8cf48e4 3b8a409
+Author: Yuval938 <incyuval@gmail.com>
+Date:   Thu Jan 23 01:33:27 2020 +0200
+
+    parallel Server
+
+commit 8cf48e4b0e37d26226fe58cf216edbfbb352a9f4
+Author: Yuval938 <incyuval@gmail.com>
+Date:   Thu Jan 23 01:29:46 2020 +0200
+
+    parallel Server
+
+commit 3b8a4099b72ddcf53141b6241e915fcf90a8152d
+Author: valdman40 <valdman40@gmail.com>
+Date:   Thu Jan 23 00:59:44 2020 +0200
+
+    ignored prints
+
+commit dbfd1c041933fa454fd4875c265a1c4397b7da2e
+Author: valdman40 <valdman40@gmail.com>
+Date:   Thu Jan 23 00:57:18 2020 +0200
+
+    MatrixSolver returns path as string
+    
+    returns (this->returnString)
+
+commit 0c1917830355ad764f4fc857b375187462b160a7
+Author: valdman40 <valdman40@gmail.com>
+Date:   Thu Jan 23 00:48:24 2020 +0200
+
+    Astar added
+
+commit 1ce795651f75dd333e2a3445dda47f48da0177ce
+Author: valdman40 <valdman40@gmail.com>
+Date:   Wed Jan 22 11:21:40 2020 +0200
+
+    added ISearcher interface, fixed the input string
+
+commit e5962212f48a1f1b10e69c696877390d8be5eb11
+Author: Yuval938 <incyuval@gmail.com>
+Date:   Tue Jan 21 14:37:58 2020 +0200
+
+    tweaks in AStar
+
+commit e737c60739d8bf05ef748a34f28c26d916861451
+Author: Yuval938 <incyuval@gmail.com>
+Date:   Tue Jan 21 13:39:10 2020 +0200
+
+    sending from clint handler to client
+
+commit b79d6cf04983a5431adcf0d1bd15f239a978616d
+Author: Yuval938 <59195998+Yuval938@users.noreply.github.com>
+Date:   Tue Jan 21 12:19:39 2020 +0200
+
+    AStar
+
+commit d8c2daa8a05defd9c4c62b8ae9ead7fbebe0b0a5
+Author: valdman40 <valdman40@gmail.com>
+Date:   Tue Jan 21 10:39:15 2020 +0200
+
+    BestFirstSearch + no need for colors on state
+
+commit 42f9cdff98616578e51c10bcfef9057d7e4f9823
+Author: Yuval938 <59195998+Yuval938@users.noreply.github.com>
+Date:   Tue Jan 21 01:53:02 2020 +0200
+
+    Add files via upload
+
+commit bfb19b64039dba50c3d941a61f6db3acf0acb59c
+Author: valdman40 <valdman40@gmail.com>
+Date:   Mon Jan 20 20:08:33 2020 +0200
+
+    added State like instructed by Eli
+
+commit f276de481318bcc558b4706194c5d6ffe726d1b6
+Author: valdman40 <valdman40@gmail.com>
+Date:   Sat Jan 18 13:31:08 2020 +0200
+
+    printing path of solution (in MatrixSolver)
+    
+    + made solver as void
+    + reads end and start points from text
+    + made node with template type
+
+commit c8bef49298d9b838287b4f9f4dbac1107eceb606
+Author: Yuval938 <59195998+Yuval938@users.noreply.github.com>
+Date:   Thu Jan 16 21:59:27 2020 +0200
+
+    Add files via upload
+
+commit 52b80e3df1cc0fe964aa5ff6c0524e33b3ff529f
+Author: Yuval938 <59195998+Yuval938@users.noreply.github.com>
+Date:   Wed Jan 15 17:28:24 2020 +0200
+
+    UPDATED FILES -
+    
+    NO NEED FOR SOLUTION AND PROBLEM CLASSES
+
+commit 80b5d963b180f9afab880520ccb4ebcfd3151d46
+Author: Yuval938 <59195998+Yuval938@users.noreply.github.com>
+Date:   Mon Jan 13 21:47:58 2020 +0200
+
+    Server & ClientHandler
+
+commit b1b412ac2708aa502d7babe4aa6aac8c53c140e1
+Author: valdman40 <valdman40@gmail.com>
+Date:   Mon Jan 13 13:26:55 2020 +0200
+
+    start building Searcher and Searchable
+
+commit 9182977ec2b828856b592caaf4ef75a3b16fea73
+Author: Yuval938 <59195998+Yuval938@users.noreply.github.com>
+Date:   Mon Jan 13 11:49:45 2020 +0200
+
+    Initial commit
